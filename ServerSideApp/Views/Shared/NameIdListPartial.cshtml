@@ -1,0 +1,44 @@
+﻿@model IEnumerable<ServerSideApp.Models.INameId>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.ValueFor(modelItem => item.Id)
+            </td>
+            <td>
+
+                @using (Html.BeginForm("Edit" + (string)ViewBag.ModelType, "Admin", FormMethod.Post)) {
+                    <input type="hidden" name="id" id="id" value="@item.Id" />
+                    <input type="text" name="name" id="name" value="@item.Name" />
+                    <input type="submit" value="Save" />
+                }
+            </td>
+            <td>
+                @Html.ActionLink("Delete", "Delete" + (string)ViewBag.ModelType, "Admin", new { id = item.Id }, null)
+            </td>
+        </tr>
+    }
+    <tr>
+        <td></td>
+        <td>
+            @using (Html.BeginForm("Create" + (string)ViewBag.ModelType.ToString(),
+                   "Admin", FormMethod.Post)) {
+                <input name="name" id="name" type="text" />
+                <input id="submit" type="submit" value="Add " />
+            }
+        </td>
+        <td></td>
+    </tr>
+</table>

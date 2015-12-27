@@ -1,0 +1,80 @@
+﻿@using ServerSideApp.Resources;
+@model ServerSideApp.Models.Piano.ListPM
+
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>List</h2>
+
+<p>
+    @if (Model.CanCreate) {
+        @Html.ActionLink(Global.New, "New");
+    }
+</p>
+<table class="table">
+    <tr>
+        <th>
+            <b>@Global.Title</b>
+        </th>
+        <th>
+            <b>@Global.PostedBy</b>
+        </th>
+        <th>
+            <b>@Global.CommentCount</b>
+        </th>
+
+        <th>
+            <b>@Global.AudioFragment</b>
+        </th>
+        <th>
+            <b>@Global.Downloads</b>
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.PianoPieces) {
+        <tr>
+            <td>
+
+                @Html.ActionLink(item.Composer + " - " + item.Title, "Details", new { id = item.Id })
+
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CommentCount)
+            </td>
+            <td>
+                @if (item.HasMp3) {
+                    <audio src="@item.Mp3Path" controls="controls"></audio>
+                }
+            </td>
+            <td>
+                @if (item.HasPdf) {
+                    @Html.ActionLink("PDF", "GetPdf", new { id = item.Id });
+                    if (item.HasMidi) {
+                        @Html.Raw(" | ");
+                        @Html.ActionLink("Midi", "GetMidi", new { id = item.Id });
+                    }
+                }
+                else if (item.HasMidi) {
+                    @Html.ActionLink("Midi", "GetMidi", new { id = item.Id });
+                }
+                else {
+                    @Html.Raw("/");
+                }
+
+            </td>
+            <td>
+                @if (item.CanEdit) {
+                    @Html.ActionLink(Global.Edit, "Edit", new { id = item.Id });
+                    @Html.Raw(" | ");
+                    @Html.ActionLink(Global.Delete, "Delete", new { id = item.Id });
+                }
+            </td>
+        </tr>
+    }
+
+</table>

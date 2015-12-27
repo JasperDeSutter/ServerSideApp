@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using ServerSideApp.Repositories;
 
 namespace ServerSideApp
 {
@@ -16,6 +17,8 @@ namespace ServerSideApp
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            PianoGenreRepository.Setup();
+            PianoDifficultyRepository.Setup();
         }
     }
 }

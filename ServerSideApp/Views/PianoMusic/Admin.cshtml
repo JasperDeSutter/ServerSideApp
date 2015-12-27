@@ -1,0 +1,16 @@
+﻿
+
+<h2>Administrator page</h2>
+<h4>Piano genres</h4>
+@{ 
+    ViewBag.ModelType = "Genre";
+}
+@Html.Partial("NameIdListPartial",@ServerSideApp.Repositories.PianoGenreRepository.GetAll())
+
+<br/>
+
+<h4>Piano difficulties</h4>
+@{
+    ViewBag.ModelType = "difficulty";
+}
+@Html.Partial("NameIdListPartial", @ServerSideApp.Repositories.PianoDifficultyRepository.GetAll())

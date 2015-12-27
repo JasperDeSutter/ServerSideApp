@@ -1,0 +1,25 @@
+﻿@using ServerSideApp.Models.Piano
+@using ServerSideApp.Resources
+@model EditPM
+@{
+    ViewBag.Title = Global.PianoCreate;
+}
+
+<h2>@Global.PianoCreate</h2>
+
+<form action="" method="post" enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
+    @Html.Partial("EditPartial")
+</form>
+
+<div>
+    @Html.ActionLink(Global.ReturnList, "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+
+
