@@ -54,22 +54,26 @@
             </td>
             <td>
                 @if (item.HasMp3) {
-                    <audio src="@item.Mp3Path" controls="controls"></audio>
+                    @* <audio src="~/PianoMusicFiles/@item.Mp3Path" controls="controls"></audio>*@
+                    <a href="~/PianoMusicFiles/@item.Mp3Path">Mp3</a>
                 }
                 else {
-                    @Html.Raw("/");
+                    @Html.Raw("/")
+                    ;
                 }
             </td>
             <td>
                 @if (item.HasPdf) {
-                    @Html.ActionLink("PDF", "GetPdf", new { id = item.Id });
-                   @* if (item.HasMidi) {
-            @Html.Raw(" | ");
-            @Html.ActionLink("Midi", "GetMidi", new { id = item.Id });
-        }
-    }
-    else if (item.HasMidi) {
-        @Html.ActionLink("Midi", "GetMidi", new { id = item.Id });*@
+
+                    <a href="~/PianoMusicFiles/@item.PdfPath">Pdf</a>
+
+                    @* if (item.HasMidi) {
+                                @Html.Raw(" | ");
+                                @Html.ActionLink("Midi", "GetMidi", new { id = item.Id });
+                            }
+                        }
+                        else if (item.HasMidi) {
+                            @Html.ActionLink("Midi", "GetMidi", new { id = item.Id });*@
                 }
                 else {
                     @Html.Raw("/");

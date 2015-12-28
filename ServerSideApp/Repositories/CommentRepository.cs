@@ -3,21 +3,32 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Web.UI.WebControls;
 using ServerSideApp.Models;
-using ServerSideApp.Models.Piano;
+using ServerSideApp.Models.Comment;
 
 namespace ServerSideApp.Repositories
 {
-    public class CommentRepostory : RepositoryBase
+    public class CommentRepository : RepositoryBase
     {
         public static readonly string TABLE = "Comments";
 
         public static int Add(Comment comment) {
-            return 0;
+            var command = Prepare(Connect(),
+                $"INSERT INTO {TABLE} VALUES (@TopicId,@PostId,@UserId,@Text,@Time,@Hidden,@RatingCount,@RatingTotal);SELECT @@IDENTITY",
+                new SqlParameter("@TopicId", comment.TopicId),
+                new SqlParameter("@PostId", comment.PostId),
+                new SqlParameter("@UserId", comment.UserId),
+                new SqlParameter("@Text", comment.Text),
+                new SqlParameter("@Time", comment.Time),
+                new SqlParameter("@Hidden", comment.Hidden),
+                new SqlParameter("@RatingCount", comment.RatingCount),
+                new SqlParameter("@RatingTotal", comment.RatingTotal));
+            comment.Id = int.Parse(command.ExecuteScalar().ToString());
+            return comment.Id;
+
         }
-        public static int GetCommentCount(Topics topic, string userId, int? postId) {
-            var command = Prepare(Connect(), $"SELECT COUNT(*) FROM {TABLE} WHERE TopicId=@topic AND UserId=@UserId AND PostId=@postId",
+        public static int GetCommentCount(Topics topic, int? postId) {
+            var command = Prepare(Connect(), $"SELECT COUNT(*) FROM {TABLE} WHERE TopicId=@topic AND PostId=@postId",
                 new SqlParameter("@topic", (int)topic),
-                new SqlParameter("@UserId", userId),
                 new SqlParameter("@postId", postId ?? (object)DBNull.Value));
             return int.Parse(command.ExecuteScalar().ToString());
         }
@@ -35,7 +46,6 @@ namespace ServerSideApp.Repositories
                         TopicId = int.Parse(reader["TopicId"].ToString()),
                         PostId = int.Parse(reader["PostId"].ToString()),
                         UserId = reader["UserId"].ToString(),
-                        Title = reader["Title"].ToString(),
                         Text = reader["Text"].ToString(),
                         Time = DateTime.Parse(reader["Time"].ToString()),
                         Hidden = bool.Parse(reader["Hidden"].ToString()),
@@ -46,6 +56,13 @@ namespace ServerSideApp.Repositories
             }
             return result;
 
+        }
+
+        public static void Hide(int id, bool hide) {
+            var command = Prepare(Connect(), $"UPDATE {TABLE} SET Hidden=@hide WHERE Id=@id",
+                new SqlParameter("@hide", hide),
+                new SqlParameter("@id", id));
+            command.ExecuteNonQuery();
         }
     }
 }

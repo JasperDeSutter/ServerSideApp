@@ -8,6 +8,7 @@ namespace ServerSideApp.Models
 {
     public enum Topics
     {
+        UNDEFINED = 0,
         PianoMusic = 1,
         Workout = 2,
     }

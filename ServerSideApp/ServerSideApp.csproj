@@ -169,6 +169,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LanguageController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -178,11 +179,13 @@
     </Compile>
     <Compile Include="Helpers\LanguageHelper.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\Comment.cs" />
+    <Compile Include="Models\Comment\Comment.cs" />
+    <Compile Include="Models\Comment\CommentListPM.cs" />
+    <Compile Include="Models\Comment\CommentPM.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\INameId.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\Piano\DetailsPm.cs" />
+    <Compile Include="Models\Piano\DetailsPM.cs" />
     <Compile Include="Models\Piano\EditPM.cs" />
     <Compile Include="Models\Piano\Difficulty.cs" />
     <Compile Include="Models\Piano\Genre.cs" />
@@ -190,7 +193,7 @@
     <Compile Include="Models\Piano\Piece.cs" />
     <Compile Include="Models\Topic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\CommentRepostory.cs" />
+    <Compile Include="Repositories\CommentRepository.cs" />
     <Compile Include="Repositories\NameIdRepositoryBase.cs" />
     <Compile Include="Repositories\PianoOtherRepositories.cs" />
     <Compile Include="Repositories\PianoPieceRepository.cs" />
@@ -268,10 +271,12 @@
     <Content Include="Views\Shared\NameIdListPartial.cshtml" />
     <Content Include="Views\PianoMusic\List.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Comment\Comments.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\Workout\" />
+    <Folder Include="PianoMusicFiles\" />
     <Folder Include="Views\Language\" />
   </ItemGroup>
   <ItemGroup>

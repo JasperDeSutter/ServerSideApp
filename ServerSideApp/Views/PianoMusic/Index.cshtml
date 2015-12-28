@@ -5,5 +5,7 @@
 
 <h2>@Global.Piano_Welcome</h2>
 
-@Html.ActionLink("see all posts", "List")
 
+@if (User.Identity.IsAuthenticated) {
+    @Html.ActionLink("see all posts", "List")
+}

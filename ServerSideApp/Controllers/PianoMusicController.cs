@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Web;
+using System.Web.ApplicationServices;
 using System.Web.Mvc;
+using System.Web.Security;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using ServerSideApp.Models;
@@ -33,18 +36,21 @@ namespace ServerSideApp.Controllers
                     HasMidi = !string.IsNullOrEmpty(piece.MidiPath),
                     HasMp3 = !string.IsNullOrEmpty(piece.Mp3Path),
                     HasPdf = !string.IsNullOrEmpty(piece.PdfPath),
-                    CanEdit = User.Identity.IsAuthenticated && UserId == piece.UserId,
+                    CanEdit = UserId == piece.UserId,
                     UserName = UserName(piece.UserId),
-                    CommentCount = CommentRepostory.GetCommentCount(Topics.PianoMusic, piece.UserId, piece.Id),
+                    CommentCount = CommentRepository.GetCommentCount(Topics.PianoMusic, piece.Id),
                     Genre = PianoGenreRepository.Get(piece.GenreId).Name,
                     Difficulty = PianoDifficultyRepository.Get(piece.DifficultyId).Name
                 };
                 add.CopyFrom(piece);
                 allpm.Add(add);
             }
+            var a = User.IsInRole("SuperUser");
+            var b = User.IsInRole("User");
+            var c = User.IsInRole("Administrator");
 
             var listPm = new ListPM {
-                CanCreate = User.Identity.IsAuthenticated && User.IsInRole("SuperUser"),
+                CanCreate = User.IsInRole("SuperUser"),
                 PianoPieces = allpm
             };
 
@@ -65,67 +71,92 @@ namespace ServerSideApp.Controllers
                 Difficulty = PianoDifficultyRepository.Get(piece.DifficultyId).Name
             };
             detailsPm.CopyFrom(piece);
-            detailsPm.Comments = CommentRepostory.Get(Topics.PianoMusic, id);
+            detailsPm.Comments = CommentRepository.Get(Topics.PianoMusic, id);
             return View(detailsPm);
         }
 
-        public FileResult GetPdf(int? id) {
-            if (!User.Identity.IsAuthenticated || !id.HasValue) return null;
-            var filename = PianoPieceRepository.Get(id.Value).PdfPath;
-            var path = Path.Combine(Server.MapPath("/RecipeImages/"), filename);
-            var stream = new StreamReader(path);
-            return File(stream.ReadToEnd(), "application/pdf");
-        }
+        //public ActionResult GetPdf(int? id) {
+        //    if (!User.Identity.IsAuthenticated || !id.HasValue) return RedirectToAction("List");
+        //    var filename = PianoPieceRepository.Get(id.Value).PdfPath;
+        //    var path = Path.Combine(Server.MapPath("/PianoMusicFiles/"), filename);
+        //    var client = new WebClient();
 
-        [HttpPost]
-        [Authorize]
-        public ActionResult AddComment(Comment comment, int? postId) {
-            if (!User.Identity.IsAuthenticated || !postId.HasValue || comment == null) return RedirectToAction("Index");
-            comment.UserId = UserId;
-            comment.PostId = postId.Value;
-            comment.Time = DateTime.Now;
-            comment.Hidden = false;
-            comment.TopicId = (int)Topics.PianoMusic;
-            CommentRepostory.Add(comment);
-            return RedirectToAction("Details", postId.Value);
-        }
-
+        //    var buffer = client.DownloadData(path);
+        //    Response.ContentType = "application/pdf";
+        //    Response.AddHeader("content-length",buffer.Length.ToString());
+        //    Response.BinaryWrite(buffer);
+        //    return RedirectToAction("List");
+        //}
 
         [HttpGet]
-        //[Authorize(Roles = "SuperUser")]
+        [Authorize(Roles = "SuperUser")]
         public ActionResult New() {
             if (User.Identity.IsAuthenticated && User.IsInRole("SuperUser"))
                 return View(EditPM.Create());
             return RedirectToAction("list");
         }
         [HttpPost]
-        //[Authorize(Roles = "SuperUser")]
-        public ActionResult New(Piece piece) {
+        [Authorize(Roles = "SuperUser")]
+        public ActionResult New(Piece piece, HttpPostedFileBase pdf, HttpPostedFileBase mp3) {
             if (piece == null || !User.Identity.IsAuthenticated) return RedirectToAction("List");
+
+            if (pdf?.ContentLength > 0) {
+                var filename = UserId + Path.GetFileName(pdf.FileName);
+                var path = Path.Combine(Server.MapPath("/PianoMusicFiles/"), filename);
+                pdf.SaveAs(path);
+                piece.PdfPath = filename;
+            }
+
+            if (mp3?.ContentLength > 0) {
+                var filename = UserId + Path.GetFileName(mp3.FileName);
+                var path = Path.Combine(Server.MapPath("/PianoMusicFiles/"), filename);
+                mp3.SaveAs(path);
+                piece.Mp3Path = filename;
+            }
             piece.UserId = UserId;
             PianoPieceRepository.Add(piece);
             return RedirectToAction("List");
         }
 
         [HttpGet]
-        //[Authorize(Roles = "SuperUser")]
+        [Authorize(Roles = "SuperUser")]
         public ActionResult Edit(int? id) {
             if (!id.HasValue) return RedirectToAction("Index");
             var piece = PianoPieceRepository.Get(id.Value);
-            if (User.Identity.IsAuthenticated && UserId == piece.UserId)
-                return View(piece);
+            if (User.Identity.IsAuthenticated && UserId == piece.UserId) {
+                var pm = EditPM.Create();
+                pm.CopyFrom(piece);
+                return View(pm);
+            }
             return RedirectToAction("Index");
         }
         [HttpPost]
-        //[Authorize(Roles = "SuperUser")]
-        public ActionResult Edit(Piece piece) {
-            if (piece != null && User.Identity.IsAuthenticated && UserId == piece.UserId)
-                PianoPieceRepository.Update(piece);
+        [Authorize(Roles = "SuperUser")]
+        public ActionResult Edit(Piece piece, HttpPostedFileBase pdf, HttpPostedFileBase mp3) {
+            if (piece == null || !User.Identity.IsAuthenticated) return RedirectToAction("List");
+            if(PianoPieceRepository.Get(piece.Id).UserId != UserId) return RedirectToAction("List");
+
+
+            if (pdf?.ContentLength > 0) {
+                var filename = UserId + Path.GetFileName(pdf.FileName);
+                var path = Path.Combine(Server.MapPath("/PianoMusicFiles/"), filename);
+                pdf.SaveAs(path);
+                piece.PdfPath = filename;
+            }
+
+            if (mp3?.ContentLength > 0) {
+                var filename = UserId + Path.GetFileName(mp3.FileName);
+                var path = Path.Combine(Server.MapPath("/PianoMusicFiles/"), filename);
+                mp3.SaveAs(path);
+                piece.Mp3Path = filename;
+            }
+
+            PianoPieceRepository.Update(piece);
             return RedirectToAction("List");
         }
 
         [HttpGet]
-        //[Authorize(Roles = "SuperUser")]
+        [Authorize(Roles = "SuperUser")]
         public ActionResult Delete(int? id) {
             if (!id.HasValue) return RedirectToAction("Index");
             var piece = PianoPieceRepository.Get(id.Value);
@@ -134,7 +165,7 @@ namespace ServerSideApp.Controllers
             return RedirectToAction("Index");
         }
         [HttpPost]
-        //[Authorize(Roles = "SuperUser")]
+        [Authorize(Roles = "SuperUser")]
         public ActionResult Delete(int id) {
             var piece = PianoPieceRepository.Get(id);
             if (User.Identity.IsAuthenticated && UserId == piece.UserId)

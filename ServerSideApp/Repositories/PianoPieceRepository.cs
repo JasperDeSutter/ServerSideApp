@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using ServerSideApp.Models.Piano;
@@ -59,25 +60,23 @@ namespace ServerSideApp.Repositories
                 new SqlParameter("@MidiPath", piece.MidiPath ?? (object)DBNull.Value),
                 new SqlParameter("@Mp3Path", piece.Mp3Path ?? (object)DBNull.Value),
                 new SqlParameter("@Description", piece.Description),
-                new SqlParameter("@Upvotes", 0));
+                new SqlParameter("@Upvotes", (object)0));
             piece.Id = int.Parse(command.ExecuteScalar().ToString());
             return piece.Id;
         }
         public static void Update(Piece piece) {
             var command = Prepare(Connect(),
-                $"UPDATE {TABLE} SET VALUES GenreId=@GenreId,DifficultyId=@DifficultyId,UserId=@UserId,Title=@Title,Composer=@Composer," +
-                "PdfPath=@PdfPath,MidiPath=@MidiPath,Mp3Path=@Mp3Path,Description=@Description,Upvotes=@Upvotes WHERE Id=@Id",
+                $"UPDATE {TABLE} SET GenreId=@GenreId,DifficultyId=@DifficultyId,Title=@Title,Composer=@Composer," +
+                "PdfPath=@PdfPath,MidiPath=@MidiPath,Mp3Path=@Mp3Path,Description=@Description WHERE Id=@Id",
                 new SqlParameter("@GenreId", piece.GenreId),
                 new SqlParameter("@DifficultyId", piece.DifficultyId),
-                new SqlParameter("@UserId", piece.UserId),
                 new SqlParameter("@Title", piece.Title),
                 new SqlParameter("@Composer", piece.Composer),
                 new SqlParameter("@PdfPath", string.IsNullOrEmpty(piece.PdfPath) ? (object)DBNull.Value : piece.PdfPath),
                 new SqlParameter("@MidiPath", piece.MidiPath ?? (object)DBNull.Value),
                 new SqlParameter("@Mp3Path", piece.Mp3Path ?? (object)DBNull.Value),
                 new SqlParameter("@Id", piece.Id),
-                new SqlParameter("@Description", piece.Description),
-                new SqlParameter("@Upvotes", piece.Upvotes));
+                new SqlParameter("@Description", piece.Description));
             command.ExecuteNonQuery();
         }
         public static void Delete(int id) {

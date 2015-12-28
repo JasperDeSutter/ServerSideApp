@@ -16,6 +16,7 @@ namespace ServerSideApp.Models.Piano
         [MaxLength(50)]
         public string Title { get; set; }
         [Required]
+        [DataType(DataType.MultilineText)]
         public string Description { get; set; }
 
         public int Upvotes { get; set; }

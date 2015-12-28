@@ -1,4 +1,5 @@
-﻿
+﻿@using ServerSideApp.Resources
+
 
 <h2>Administrator page for Piano Music</h2>
 
@@ -17,3 +18,7 @@
     ViewBag.ModelType = "difficulty";
 }
 @Html.Partial("NameIdListPartial", @ServerSideApp.Repositories.PianoDifficultyRepository.GetAll())
+
+<br/>
+
+@Html.ActionLink(Global.ReturnList, "List")

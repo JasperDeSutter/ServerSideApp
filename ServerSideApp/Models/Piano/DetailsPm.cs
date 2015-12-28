@@ -16,7 +16,7 @@ namespace ServerSideApp.Models.Piano
         public string Genre { get; set; }
         public string Difficulty { get; set; }
 
-        public IEnumerable<Comment> Comments { get; set; }
+        public IEnumerable<Comment.Comment> Comments { get; set; }
 
     }
 

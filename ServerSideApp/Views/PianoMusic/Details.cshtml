@@ -1,45 +1,89 @@
-﻿@model ServerSideApp.Models.Piano.DetailsPM
+﻿@using ServerSideApp.Models
+@using ServerSideApp.Resources
+@model ServerSideApp.Models.Piano.DetailsPM
 
-    @{
-        ViewBag.Title = "Details";
-    }
+@{
+    ViewBag.Title = "Details";
+}
 
-    <h2>Details</h2>
+<h2>Details</h2>
 
-    <div>
-        <h4>PianoPiece</h4>
-        <hr />
-        <dl class="dl-horizontal">
+<div>
+
+    <h4>@Model.Composer - @Model.Title</h4>
+
+    <hr />
+    <dl class="dl-horizontal">
+        @*
             <dt>
-                @Html.DisplayNameFor(model => model.GenreId)
+                @Html.DisplayNameFor(model => model.Title)
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.GenreId)
+                @Html.DisplayFor(model => model.Title)
             </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.DifficultyId)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.DifficultyId)
-            </dd>
-
             <dt>
                 @Html.DisplayNameFor(model => model.Composer)
             </dt>
 
             <dd>
                 @Html.DisplayFor(model => model.Composer)
-            </dd>
+            </dd>*@
 
-        </dl>
-    </div>
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Genre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Genre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Difficulty)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Difficulty)
+        </dd>
+
+        @if (Model.HasPdf) {
+            <dt>
+                <b>Pdf</b>
+            </dt>
+
+            <dd>
+                <a href="~/PianoMusicFiles/@Model.PdfPath">Pdf</a>
+            </dd>
+        }
+
+        @if (Model.HasMp3) {
+            <dt>
+                <b>Mp3</b>
+            </dt>
+
+            <dd>
+                <audio src="~/PianoMusicFiles/@Model.Mp3Path" controls="controls"></audio>
+            </dd>
+        }
+    </dl>
+</div>
 <p>
     @if (Model.CanEdit) {
-        @Html.ActionLink("Edit", "Edit", new { id = Model.Id });
-        @Html.Raw(" |");
+        @Html.ActionLink("Edit", "Edit", new{id = Model.Id})
+        ;
+        @Html.Raw(" |")
+        ;
     }
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink(Global.ReturnList, "List")
 </p>
+
+
+@Html.Action("GetComments","Comment",new { postId = Model.Id, topic = Topics.PianoMusic})
