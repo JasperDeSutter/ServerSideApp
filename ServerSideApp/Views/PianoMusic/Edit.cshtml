@@ -1,10 +1,18 @@
-﻿
+﻿@using ServerSideApp.Resources
+
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = Global.Edit;
 }
-
-@using (Html.BeginForm()) {
+<h2>@Global.Edit</h2>
+<form action="" method="post" enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
     @Html.Partial("EditPartial")
-}
-<h2>Index</h2>
+</form>
 
+<div>
+    @Html.ActionLink(Global.ReturnList, "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

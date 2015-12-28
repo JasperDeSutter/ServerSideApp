@@ -1,4 +1,5 @@
-﻿@using ServerSideApp.Resources;
+﻿@using ServerSideApp.Models.Piano
+@using ServerSideApp.Resources;
 @model ServerSideApp.Models.Piano.ListPM
 
 @{
@@ -17,13 +18,13 @@
         <th>
             <b>@Global.Title</b>
         </th>
+        <th></th>
         <th>
             <b>@Global.PostedBy</b>
         </th>
         <th>
             <b>@Global.CommentCount</b>
         </th>
-
         <th>
             <b>@Global.AudioFragment</b>
         </th>
@@ -41,6 +42,11 @@
 
             </td>
             <td>
+                @Html.ActionLink(item.Genre, "List", new { Genre = item.GenreId })
+                |
+                @Html.ActionLink(item.Difficulty, "List", new { Difficulty = item.DifficultyId })
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.UserName)
             </td>
             <td>
@@ -50,17 +56,20 @@
                 @if (item.HasMp3) {
                     <audio src="@item.Mp3Path" controls="controls"></audio>
                 }
+                else {
+                    @Html.Raw("/");
+                }
             </td>
             <td>
                 @if (item.HasPdf) {
                     @Html.ActionLink("PDF", "GetPdf", new { id = item.Id });
-                    if (item.HasMidi) {
-                        @Html.Raw(" | ");
-                        @Html.ActionLink("Midi", "GetMidi", new { id = item.Id });
-                    }
-                }
-                else if (item.HasMidi) {
-                    @Html.ActionLink("Midi", "GetMidi", new { id = item.Id });
+                   @* if (item.HasMidi) {
+            @Html.Raw(" | ");
+            @Html.ActionLink("Midi", "GetMidi", new { id = item.Id });
+        }
+    }
+    else if (item.HasMidi) {
+        @Html.ActionLink("Midi", "GetMidi", new { id = item.Id });*@
                 }
                 else {
                     @Html.Raw("/");

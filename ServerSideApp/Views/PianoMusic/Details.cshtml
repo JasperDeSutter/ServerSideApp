@@ -1,50 +1,45 @@
-﻿@model ServerSideApp.Models.Piano.Piece
+﻿@model ServerSideApp.Models.Piano.DetailsPM
 
-@{
-    ViewBag.Title = "Details";
-}
+    @{
+        ViewBag.Title = "Details";
+    }
 
-<h2>Details</h2>
+    <h2>Details</h2>
 
-<div>
-    <h4>PianoPiece</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.GenreId)
-        </dt>
+    <div>
+        <h4>PianoPiece</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.GenreId)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.GenreId)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.GenreId)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DifficultyId)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.DifficultyId)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.DifficultyId)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.DifficultyId)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Composer)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Composer)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Composer)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Composer)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-    </dl>
-</div>
+        </dl>
+    </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @if (Model.CanEdit) {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id });
+        @Html.Raw(" |");
+    }
     @Html.ActionLink("Back to List", "Index")
 </p>

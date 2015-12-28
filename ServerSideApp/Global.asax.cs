@@ -17,8 +17,11 @@ namespace ServerSideApp
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
             PianoGenreRepository.Setup();
             PianoDifficultyRepository.Setup();
+            TopicRepository.Setup();
+
         }
     }
 }

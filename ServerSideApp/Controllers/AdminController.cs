@@ -8,6 +8,10 @@ namespace ServerSideApp.Controllers
     [Authorize(Roles = "Administrator")]
     public class AdminController : Controller
     {
+        public ActionResult Index() {
+            return View();
+        }
+
         public ActionResult CreateGenre(string name) {
             if (!string.IsNullOrEmpty(name))
                 PianoGenreRepository.Add(name);

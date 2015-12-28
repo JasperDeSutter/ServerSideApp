@@ -15,7 +15,10 @@ namespace ServerSideApp.Models.Piano
         [Required]
         [MaxLength(50)]
         public string Title { get; set; }
+        [Required]
+        public string Description { get; set; }
 
+        public int Upvotes { get; set; }
         public int Id { get; set; }
         public string UserId { get; set; }
         public string PdfPath { get; set; }
