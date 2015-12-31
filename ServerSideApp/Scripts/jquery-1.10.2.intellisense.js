@@ -1483,7 +1483,7 @@ intellisense.annotate(jQuery.fn, {
     /// </signature>
   },
   'hidden': function() {
-    /// <summary>Selects all elements that are hidden.</summary>
+    /// <summary>Selects all elements that are showHidden.</summary>
   },
   'hide': function() {
     /// <signature>

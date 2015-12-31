@@ -15,8 +15,5 @@ namespace ServerSideApp.Models.Comment
         public string Text { get; set; }
         public DateTime Time { get; set; }
         public bool Hidden { get; set; }
-
-        public int RatingCount { get; set; }
-        public int RatingTotal { get; set; }
     }
 }

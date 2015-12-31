@@ -151,9 +151,9 @@ window.Modernizr = (function( window, document, undefined ) {
           //avoid crashing IE8, if background image is used
           fakeBody.style.background = '';
           //Safari 5.13/5.1.4 OSX stops loading if ::-webkit-scrollbar is used and scrollbars are visible
-          fakeBody.style.overflow = 'hidden';
+          fakeBody.style.overflow = 'showHidden';
           docOverflow = docElement.style.overflow;
-          docElement.style.overflow = 'hidden';
+          docElement.style.overflow = 'showHidden';
           docElement.appendChild(fakeBody);
       }
 
@@ -724,7 +724,7 @@ window.Modernizr = (function( window, document, undefined ) {
     tests['generatedcontent'] = function() {
         var bool;
 
-        injectElementWithStyles(['#',mod,'{font:0/0 a}#',mod,':after{content:"',smile,'";visibility:hidden;font:3px/1 a}'].join(''), function( node ) {
+        injectElementWithStyles(['#',mod,'{font:0/0 a}#',mod,':after{content:"',smile,'";visibility:showHidden;font:3px/1 a}'].join(''), function( node ) {
           bool = node.offsetHeight >= 3;
         });
 
@@ -914,7 +914,7 @@ window.Modernizr = (function( window, document, undefined ) {
                 if ( bool ) {
 
                     inputElem.value         = smile;
-                    inputElem.style.cssText = 'position:absolute;visibility:hidden;';
+                    inputElem.style.cssText = 'position:absolute;visibility:showHidden;';
 
                     if ( /^range$/.test(inputElemType) && inputElem.style.WebkitAppearance !== undefined ) {
 
@@ -1058,8 +1058,8 @@ window.Modernizr = (function( window, document, undefined ) {
         try {
             var a = document.createElement('a');
             a.innerHTML = '<xyz></xyz>';
-            //if the hidden property is implemented we can assume, that the browser supports basic HTML5 Styles
-            supportsHtml5Styles = ('hidden' in a);
+            //if the showHidden property is implemented we can assume, that the browser supports basic HTML5 Styles
+            supportsHtml5Styles = ('showHidden' in a);
 
             supportsUnknownElements = a.childNodes.length == 1 || (function() {
               // assign a false positive if unable to shiv

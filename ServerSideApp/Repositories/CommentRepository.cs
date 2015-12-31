@@ -13,15 +13,13 @@ namespace ServerSideApp.Repositories
 
         public static int Add(Comment comment) {
             var command = Prepare(Connect(),
-                $"INSERT INTO {TABLE} VALUES (@TopicId,@PostId,@UserId,@Text,@Time,@Hidden,@RatingCount,@RatingTotal);SELECT @@IDENTITY",
+                $"INSERT INTO {TABLE} VALUES (@TopicId,@PostId,@UserId,@Text,@Time,@Hidden);SELECT @@IDENTITY",
                 new SqlParameter("@TopicId", comment.TopicId),
                 new SqlParameter("@PostId", comment.PostId),
                 new SqlParameter("@UserId", comment.UserId),
                 new SqlParameter("@Text", comment.Text),
                 new SqlParameter("@Time", comment.Time),
-                new SqlParameter("@Hidden", comment.Hidden),
-                new SqlParameter("@RatingCount", comment.RatingCount),
-                new SqlParameter("@RatingTotal", comment.RatingTotal));
+                new SqlParameter("@Hidden", comment.Hidden));
             comment.Id = int.Parse(command.ExecuteScalar().ToString());
             return comment.Id;
 
@@ -49,8 +47,6 @@ namespace ServerSideApp.Repositories
                         Text = reader["Text"].ToString(),
                         Time = DateTime.Parse(reader["Time"].ToString()),
                         Hidden = bool.Parse(reader["Hidden"].ToString()),
-                        RatingCount = int.Parse(reader["RatingCount"].ToString()),
-                        RatingTotal = int.Parse(reader["RatingTotal"].ToString()),
                     });
                 }
             }

@@ -17,6 +17,7 @@ namespace ServerSideApp.Models.Piano
         public string Difficulty { get; set; }
 
         public IEnumerable<Comment.Comment> Comments { get; set; }
+        public bool CanUpvote { get; set; }
 
     }
 

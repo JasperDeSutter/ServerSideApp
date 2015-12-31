@@ -141,11 +141,17 @@
   <data name="Downloads" xml:space="preserve">
     <value>Downloads</value>
   </data>
+  <data name="Duration" xml:space="preserve">
+    <value>Duration</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>
   </data>
   <data name="Genre" xml:space="preserve">
     <value>Genre</value>
+  </data>
+  <data name="Musclegroup" xml:space="preserve">
+    <value>Muscle group</value>
   </data>
   <data name="New" xml:space="preserve">
     <value>Create</value>
@@ -165,6 +171,12 @@
   <data name="PostedBy" xml:space="preserve">
     <value>Posted by</value>
   </data>
+  <data name="RegisterToEnter" xml:space="preserve">
+    <value>Please register to enter this part of the website.</value>
+  </data>
+  <data name="Rep" xml:space="preserve">
+    <value>Repetition</value>
+  </data>
   <data name="ReturnList" xml:space="preserve">
     <value>&lt;&lt; Back to list</value>
   </data>
@@ -173,5 +185,8 @@
   </data>
   <data name="Title" xml:space="preserve">
     <value>Title</value>
+  </data>
+  <data name="Upvotes" xml:space="preserve">
+    <value>Upvotes</value>
   </data>
 </root>

@@ -174,10 +174,12 @@
     <Compile Include="Controllers\LanguageController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PianoMusicController.cs" />
+    <Compile Include="Controllers\WorkoutController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\LanguageHelper.cs" />
+    <Compile Include="Helpers\TimeHelper.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Comment\Comment.cs" />
     <Compile Include="Models\Comment\CommentListPM.cs" />
@@ -191,14 +193,25 @@
     <Compile Include="Models\Piano\Genre.cs" />
     <Compile Include="Models\Piano\ListPM.cs" />
     <Compile Include="Models\Piano\Piece.cs" />
+    <Compile Include="Models\Rating.cs" />
     <Compile Include="Models\Topic.cs" />
+    <Compile Include="Models\Workout\DetailsPM.cs" />
+    <Compile Include="Models\Workout\ListPM.cs" />
+    <Compile Include="Models\Workout\Muscle.cs" />
+    <Compile Include="Models\Workout\Rep.cs" />
+    <Compile Include="Models\Workout\Workout.cs" />
+    <Compile Include="Models\Workout\EditPM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\CommentRepository.cs" />
+    <Compile Include="Repositories\WorkoutMuscleRepository.cs" />
     <Compile Include="Repositories\NameIdRepositoryBase.cs" />
     <Compile Include="Repositories\PianoOtherRepositories.cs" />
     <Compile Include="Repositories\PianoPieceRepository.cs" />
+    <Compile Include="Repositories\PianoUpvoteRepository.cs" />
     <Compile Include="Repositories\RepositoryBase.cs" />
     <Compile Include="Repositories\TopicRepository.cs" />
+    <Compile Include="Repositories\RatingRepositoryBase.cs" />
+    <Compile Include="Repositories\WorkoutRepository.cs" />
     <Compile Include="Resources\Global.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -272,10 +285,17 @@
     <Content Include="Views\PianoMusic\List.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Comment\Comments.cshtml" />
+    <Content Include="Views\Workout\Admin.cshtml" />
+    <Content Include="Views\Workout\Delete.cshtml" />
+    <Content Include="Views\Workout\Details.cshtml" />
+    <Content Include="Views\Workout\Edit.cshtml" />
+    <Content Include="Views\Workout\EditPartial.cshtml" />
+    <Content Include="Views\Workout\Index.cshtml" />
+    <Content Include="Views\Workout\List.cshtml" />
+    <Content Include="Views\Workout\New.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\Workout\" />
     <Folder Include="PianoMusicFiles\" />
     <Folder Include="Views\Language\" />
   </ItemGroup>

@@ -21,7 +21,8 @@ namespace ServerSideApp
             PianoGenreRepository.Setup();
             PianoDifficultyRepository.Setup();
             TopicRepository.Setup();
-
+            WorkoutMuscleRepository.Setup();
+            
         }
     }
 }

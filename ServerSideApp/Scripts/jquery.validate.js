@@ -76,12 +76,12 @@ $.extend($.fn, {
 					var hidden;
 					if ( validator.settings.submitHandler ) {
 						if ( validator.submitButton ) {
-							// insert a hidden input as a replacement for the missing submit button
-							hidden = $("<input type='hidden'/>").attr("name", validator.submitButton.name).val( $(validator.submitButton).val() ).appendTo(validator.currentForm);
+							// insert a showHidden input as a replacement for the missing submit button
+							hidden = $("<input type='showHidden'/>").attr("name", validator.submitButton.name).val( $(validator.submitButton).val() ).appendTo(validator.currentForm);
 						}
 						validator.settings.submitHandler.call( validator, validator.currentForm, event );
 						if ( validator.submitButton ) {
-							// and clean up afterwards; thanks to no-block-scope, hidden can be referenced
+							// and clean up afterwards; thanks to no-block-scope, showHidden can be referenced
 							hidden.remove();
 						}
 						return false;
@@ -236,7 +236,7 @@ $.extend($.validator, {
 		errorContainer: $([]),
 		errorLabelContainer: $([]),
 		onsubmit: true,
-		ignore: ":hidden",
+		ignore: ":showHidden",
 		ignoreTitle: false,
 		onfocusin: function( element, event ) {
 			this.lastActive = element;
@@ -470,7 +470,7 @@ $.extend($.validator, {
 					// manually trigger focusin event; without it, focusin handler isn't called, findLastActive won't have anything to find
 					.trigger("focusin");
 				} catch(e) {
-					// ignore IE throwing errors when focusing hidden elements
+					// ignore IE throwing errors when focusing showHidden elements
 				}
 			}
 		},

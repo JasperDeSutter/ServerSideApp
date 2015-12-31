@@ -11,9 +11,9 @@ namespace ServerSideApp.Repositories
     {
         private const string TABLE = "PianoPieces";
 
-        private static List<Piece> GetList(string query, params SqlParameter[] parameters) {
+        private static List<Piece> GetList(string queryFromSelect = "", params SqlParameter[] parameters) {
             var result = new List<Piece>();
-            var command = Prepare(Connect(), query, parameters);
+            var command = Prepare(Connect(), $"SELECT * FROM {TABLE} " + queryFromSelect, parameters);
             using (var reader = command.ExecuteReader()) {
                 while (reader.Read()) {
                     result.Add(new Piece {
@@ -27,8 +27,7 @@ namespace ServerSideApp.Repositories
                         PdfPath = reader["PdfPath"].ToString(),
                         MidiPath = reader["MidiPath"].ToString(),
                         Mp3Path = reader["Mp3Path"].ToString(),
-
-                        Upvotes = int.Parse(reader["Upvotes"].ToString()),
+                        
                         Description = reader["Description"].ToString(),
                     });
                 }
@@ -36,31 +35,40 @@ namespace ServerSideApp.Repositories
             return result;
         }
         public static Piece Get(int id) {
-            return GetList($"SELECT * FROM {TABLE} WHERE Id = @Id",
+            return GetList("WHERE Id = @Id",
                 new SqlParameter("@Id", id)).First();
         }
-        public static List<Piece> GetAll() {
-            return GetList($"SELECT * FROM {TABLE}");
+        public static List<Piece> GetAll(int? difficulty, int? genre) {
+            if (difficulty == null) {
+                if (genre == null)
+                    return GetList();
+                return GetList("WHERE GenreId=@genre", new SqlParameter("@genre", genre));
+            }
+            if (genre == null)
+                return GetList("WHERE DifficultyId=@difficulty", new SqlParameter("@difficulty", difficulty));
+            return GetList("WHERE DifficultyId=@difficulty AND GenreId=@genre",
+                new SqlParameter("@difficulty", difficulty), new SqlParameter("@genre", genre));
+
         }
+
         public static List<Piece> GetAllFromUser(string userId) {
-            return GetList($"SELECT * FROM {TABLE} WHERE UserId=@UserId",
+            return GetList("WHERE UserId=@UserId",
                 new SqlParameter("@UserId", userId));
         }
 
 
         public static int Add(Piece piece) {
             var command = Prepare(Connect(),
-                $"INSERT INTO {TABLE} VALUES (@GenreId,@DifficultyId,@UserId,@Title,@Composer,@PdfPath,@MidiPath,@Mp3Path,@Description,@Upvotes);SELECT @@IDENTITY",
+                $"INSERT INTO {TABLE} VALUES (@GenreId,@DifficultyId,@UserId,@Title,@Composer,@PdfPath,@MidiPath,@Mp3Path,@Description);SELECT @@IDENTITY",
                 new SqlParameter("@GenreId", piece.GenreId),
                 new SqlParameter("@DifficultyId", piece.DifficultyId),
                 new SqlParameter("@UserId", piece.UserId),
                 new SqlParameter("@Title", piece.Title),
                 new SqlParameter("@Composer", piece.Composer),
-                new SqlParameter("@PdfPath", string.IsNullOrEmpty(piece.PdfPath) ? (object)DBNull.Value : piece.PdfPath),
-                new SqlParameter("@MidiPath", piece.MidiPath ?? (object)DBNull.Value),
-                new SqlParameter("@Mp3Path", piece.Mp3Path ?? (object)DBNull.Value),
-                new SqlParameter("@Description", piece.Description),
-                new SqlParameter("@Upvotes", (object)0));
+                new SqlParameter("@PdfPath", string.IsNullOrEmpty(piece.PdfPath) ? (object) DBNull.Value : piece.PdfPath),
+                new SqlParameter("@MidiPath", piece.MidiPath ?? (object) DBNull.Value),
+                new SqlParameter("@Mp3Path", piece.Mp3Path ?? (object) DBNull.Value),
+                new SqlParameter("@Description", piece.Description));
             piece.Id = int.Parse(command.ExecuteScalar().ToString());
             return piece.Id;
         }

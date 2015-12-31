@@ -3,10 +3,10 @@
 @model ServerSideApp.Models.Piano.DetailsPM
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = Global.Details;
 }
 
-<h2>Details</h2>
+<h2>Global.Details</h2>
 
 <div>
 
@@ -77,7 +77,7 @@
 </div>
 <p>
     @if (Model.CanEdit) {
-        @Html.ActionLink("Edit", "Edit", new{id = Model.Id})
+        @Html.ActionLink(Global.Edit, "Edit", new{id = Model.Id})
         ;
         @Html.Raw(" |")
         ;

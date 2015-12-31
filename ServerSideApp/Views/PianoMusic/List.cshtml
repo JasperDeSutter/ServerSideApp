@@ -6,13 +6,27 @@
     ViewBag.Title = "List";
 }
 
-<h2>List</h2>
+<h2>
+    List
+    @if (Model.IsSortedGenre) {
+        @Html.Raw(" " + Model.GenreSelects.First(g => g.Selected).Text)
+    }
+    @if (Model.IsSortedDifficulty) {
+        @Html.Raw(" " + Model.DifficulitySelects.First(d => d.Selected).Text)
+    }
+</h2>
 
 <p>
     @if (Model.CanCreate) {
-        @Html.ActionLink(Global.New, "New");
+        @Html.ActionLink(Global.New, "New")
+        ;
     }
 </p>
+@using (Html.BeginForm("List", "PianoMusic", FormMethod.Get)) {
+    @Html.DropDownList("genre", Model.GenreSelects, Global.Genre, null)
+    @Html.DropDownList("difficulty", Model.DifficulitySelects, Global.Difficulty, null)
+    <input type="submit" id="s" name="s" value="Go!" />
+}
 <table class="table">
     <tr>
         <th>
@@ -31,6 +45,9 @@
         <th>
             <b>@Global.Downloads</b>
         </th>
+        <th>
+            <b>@Global.Upvotes</b>
+        </th>
         <th></th>
     </tr>
 
@@ -43,7 +60,7 @@
             </td>
             <td>
                 @Html.ActionLink(item.Genre, "List", new { Genre = item.GenreId })
-                |
+                <br/>
                 @Html.ActionLink(item.Difficulty, "List", new { Difficulty = item.DifficultyId })
             </td>
             <td>
@@ -76,18 +93,33 @@
                             @Html.ActionLink("Midi", "GetMidi", new { id = item.Id });*@
                 }
                 else {
-                    @Html.Raw("/");
+                    @Html.Raw("/")
+                    ;
                 }
 
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.Upvotes)
+            </td>
+            <td>
                 @if (item.CanEdit) {
-                    @Html.ActionLink(Global.Edit, "Edit", new { id = item.Id });
-                    @Html.Raw(" | ");
-                    @Html.ActionLink(Global.Delete, "Delete", new { id = item.Id });
+                    @Html.ActionLink(Global.Edit, "Edit", new { id = item.Id })
+                    @Html.Raw(" | ")
+                    @Html.ActionLink(Global.Delete, "Delete", new { id = item.Id })
+                }
+                else {
+                    if (item.CanUpvote) {
+                        @Html.ActionLink("+", "Upvote", new { id = item.Id, vote = true }, new { @class = "btn btn-default" })
+                    }
+                    else {
+                        @Html.ActionLink("-", "Upvote", new { id = item.Id, vote = false }, new { @class = "btn btn-default" })
+                    }
                 }
             </td>
         </tr>
     }
 
 </table>
+@if (Model.IsSortedGenre || Model.IsSortedDifficulty) {
+    @Html.ActionLink("see all posts", "List")
+}

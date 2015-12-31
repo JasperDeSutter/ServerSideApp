@@ -28,9 +28,7 @@ namespace ServerSideApp.Controllers
                 PostId = postId,
                 Time = DateTime.Now,
                 Hidden = false,
-                TopicId = (int)topic,
-                RatingCount = 0,
-                RatingTotal = 0
+                TopicId = (int)topic
             };
             CommentRepository.Add(comment);
             return Redirect(Request.UrlReferrer?.ToString());

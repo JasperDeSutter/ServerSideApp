@@ -1,6 +1,4 @@
 ﻿using System.Web.Mvc;
-using ServerSideApp.Models;
-using ServerSideApp.Models.Piano;
 using ServerSideApp.Repositories;
 
 namespace ServerSideApp.Controllers
@@ -46,5 +44,20 @@ namespace ServerSideApp.Controllers
         }
 
 
+        public ActionResult CreateMuscle(string name) {
+            if (!string.IsNullOrEmpty(name))
+                WorkoutMuscleRepository.Add(name);
+            return RedirectToAction("Admin", "Workout");
+        }
+        public ActionResult DeleteMuscle(int? id) {
+            if (id.HasValue)
+                WorkoutMuscleRepository.Delete(id.Value);
+            return RedirectToAction("Admin", "Workout");
+        }
+        public ActionResult EditMuscle(Models.Workout.Muscle muscle) {
+            if (!string.IsNullOrEmpty(muscle?.Name))
+                WorkoutMuscleRepository.Update(muscle);
+            return RedirectToAction("Admin", "Workout");
+        }
     }
 }

@@ -3,10 +3,10 @@
 
 <h2>Administrator page for Piano Music</h2>
 
-@Html.ActionLink("Return to admin page", "Index", "Admin");
+@Html.ActionLink("Return to admin page", "Index", "Admin")
 
 <h4>Piano genres</h4>
-@{ 
+@{
     ViewBag.ModelType = "Genre";
 }
 @Html.Partial("NameIdListPartial",@ServerSideApp.Repositories.PianoGenreRepository.GetAll())

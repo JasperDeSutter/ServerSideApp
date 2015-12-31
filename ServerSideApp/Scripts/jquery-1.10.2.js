@@ -1085,7 +1085,7 @@ var i,
 		return -1;
 	},
 
-	booleans = "checked|selected|async|autofocus|autoplay|controls|defer|disabled|hidden|ismap|loop|multiple|open|readonly|required|scoped",
+	booleans = "checked|selected|async|autofocus|autoplay|controls|defer|disabled|showHidden|ismap|loop|multiple|open|readonly|required|scoped",
 
 	// Regular expressions
 
@@ -1636,14 +1636,14 @@ setDocument = Sizzle.setDocument = function( node ) {
 			// Support: Windows 8 Native Apps
 			// The type attribute is restricted during .innerHTML assignment
 			var input = doc.createElement("input");
-			input.setAttribute( "type", "hidden" );
+			input.setAttribute( "type", "showHidden" );
 			div.appendChild( input ).setAttribute( "t", "" );
 
 			if ( div.querySelectorAll("[t^='']").length ) {
 				rbuggyQSA.push( "[*^$]=" + whitespace + "*(?:''|\"\")" );
 			}
 
-			// FF 3.5 - :enabled/:disabled and hidden elements (hidden elements are still enabled)
+			// FF 3.5 - :enabled/:disabled and showHidden elements (showHidden elements are still enabled)
 			// IE8 throws error here and will not see later tests
 			if ( !div.querySelectorAll(":enabled").length ) {
 				rbuggyQSA.push( ":enabled", ":disabled" );
@@ -3497,9 +3497,9 @@ jQuery.support = (function( support ) {
 		// Check if table cells still have offsetWidth/Height when they are set
 		// to display:none and there are still other visible table cells in a
 		// table row; if so, offsetWidth/Height are not reliable for use when
-		// determining if an element has been hidden directly using
+		// determining if an element has been showHidden directly using
 		// display:none (it is still safe to use offsets if a parent element is
-		// hidden; don safety goggles and see bug #4512 for more information).
+		// showHidden; don safety goggles and see bug #4512 for more information).
 		div.innerHTML = "<table><tr><td></td><td>t</td></tr></table>";
 		tds = div.getElementsByTagName("td");
 		tds[ 0 ].style.cssText = "padding:0;margin:0;border:0;display:none";
@@ -5052,7 +5052,7 @@ jQuery.event = {
 					try {
 						elem[ type ]();
 					} catch ( e ) {
-						// IE<9 dies on focus/blur to hidden element (#1486,#12518)
+						// IE<9 dies on focus/blur to showHidden element (#1486,#12518)
 						// only reproducible on winXP IE8 native, not IE9 in IE8 mode
 					}
 					jQuery.event.triggered = undefined;
@@ -5285,7 +5285,7 @@ jQuery.event = {
 						return false;
 					} catch ( e ) {
 						// Support: IE<9
-						// If we error on focus to hidden element (#1486, #12518),
+						// If we error on focus to showHidden element (#1486, #12518),
 						// let .trigger() run the handlers
 					}
 				}
@@ -6818,7 +6818,7 @@ var iframe, getStyles, curCSS,
 	rrelNum = new RegExp( "^([+-])=(" + core_pnum + ")", "i" ),
 	elemdisplay = { BODY: "block" },
 
-	cssShow = { position: "absolute", visibility: "hidden", display: "block" },
+	cssShow = { position: "absolute", visibility: "showHidden", display: "block" },
 	cssNormalTransform = {
 		letterSpacing: 0,
 		fontWeight: 400
@@ -6873,7 +6873,7 @@ function showHide( elements, show ) {
 		display = elem.style.display;
 		if ( show ) {
 			// Reset the inline display of this element to learn if it is
-			// being hidden by cascaded rules or not
+			// being showHidden by cascaded rules or not
 			if ( !values[ index ] && display === "none" ) {
 				elem.style.display = "";
 			}
@@ -9134,7 +9134,7 @@ function defaultPrefilter( elem, props, opts ) {
 	}
 
 	if ( opts.overflow ) {
-		style.overflow = "hidden";
+		style.overflow = "showHidden";
 		if ( !jQuery.support.shrinkWrapBlocks ) {
 			anim.always(function() {
 				style.overflow = opts.overflow[ 0 ];
@@ -9160,7 +9160,7 @@ function defaultPrefilter( elem, props, opts ) {
 
 	if ( !jQuery.isEmptyObject( orig ) ) {
 		if ( dataShow ) {
-			if ( "hidden" in dataShow ) {
+			if ( "showHidden" in dataShow ) {
 				hidden = dataShow.hidden;
 			}
 		} else {
@@ -9305,7 +9305,7 @@ jQuery.each([ "toggle", "show", "hide" ], function( i, name ) {
 jQuery.fn.extend({
 	fadeTo: function( speed, to, easing, callback ) {
 
-		// show any hidden elements after setting opacity to 0
+		// show any showHidden elements after setting opacity to 0
 		return this.filter( isHidden ).css( "opacity", 0 ).show()
 
 			// animate to the value specified

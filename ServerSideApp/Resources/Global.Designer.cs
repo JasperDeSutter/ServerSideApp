@@ -133,6 +133,15 @@ namespace ServerSideApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Duration.
+        /// </summary>
+        public static string Duration {
+            get {
+                return ResourceManager.GetString("Duration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit.
         /// </summary>
         public static string Edit {
@@ -147,6 +156,15 @@ namespace ServerSideApp.Resources {
         public static string Genre {
             get {
                 return ResourceManager.GetString("Genre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Muscle group.
+        /// </summary>
+        public static string Musclegroup {
+            get {
+                return ResourceManager.GetString("Musclegroup", resourceCulture);
             }
         }
         
@@ -205,6 +223,24 @@ namespace ServerSideApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please register to enter this part of the website..
+        /// </summary>
+        public static string RegisterToEnter {
+            get {
+                return ResourceManager.GetString("RegisterToEnter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Repetition.
+        /// </summary>
+        public static string Rep {
+            get {
+                return ResourceManager.GetString("Rep", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;&lt; Back to list.
         /// </summary>
         public static string ReturnList {
@@ -228,6 +264,15 @@ namespace ServerSideApp.Resources {
         public static string Title {
             get {
                 return ResourceManager.GetString("Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upvotes.
+        /// </summary>
+        public static string Upvotes {
+            get {
+                return ResourceManager.GetString("Upvotes", resourceCulture);
             }
         }
     }

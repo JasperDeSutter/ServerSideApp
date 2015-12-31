@@ -614,7 +614,7 @@ if (!jQuery) { throw new Error("Bootstrap requires jQuery") }
     var complete = function () {
       this.transitioning = 0
       this.$element
-        .trigger('hidden.bs.collapse')
+        .trigger('showHidden.bs.collapse')
         .removeClass('collapsing')
         .addClass('collapse')
     }
@@ -783,7 +783,7 @@ if (!jQuery) { throw new Error("Bootstrap requires jQuery") }
       if (!$parent.hasClass('open')) return
       $parent.trigger(e = $.Event('hide.bs.dropdown'))
       if (e.isDefaultPrevented()) return
-      $parent.removeClass('open').trigger('hidden.bs.dropdown')
+      $parent.removeClass('open').trigger('showHidden.bs.dropdown')
     })
   }
 
@@ -912,7 +912,7 @@ if (!jQuery) { throw new Error("Bootstrap requires jQuery") }
 
       that.$element
         .addClass('in')
-        .attr('aria-hidden', false)
+        .attr('aria-showHidden', false)
 
       that.enforceFocus()
 
@@ -945,7 +945,7 @@ if (!jQuery) { throw new Error("Bootstrap requires jQuery") }
 
     this.$element
       .removeClass('in')
-      .attr('aria-hidden', true)
+      .attr('aria-showHidden', true)
       .off('click.dismiss.modal')
 
     $.support.transition && this.$element.hasClass('fade') ?
@@ -980,7 +980,7 @@ if (!jQuery) { throw new Error("Bootstrap requires jQuery") }
     this.$element.hide()
     this.backdrop(function () {
       that.removeBackdrop()
-      that.$element.trigger('hidden.bs.modal')
+      that.$element.trigger('showHidden.bs.modal')
     })
   }
 
@@ -1082,7 +1082,7 @@ if (!jQuery) { throw new Error("Bootstrap requires jQuery") }
 
   $(document)
     .on('show.bs.modal',  '.modal', function () { $(document.body).addClass('modal-open') })
-    .on('hidden.bs.modal', '.modal', function () { $(document.body).removeClass('modal-open') })
+    .on('showHidden.bs.modal', '.modal', function () { $(document.body).removeClass('modal-open') })
 
 }(window.jQuery);
 
@@ -1364,7 +1364,7 @@ if (!jQuery) { throw new Error("Bootstrap requires jQuery") }
         .emulateTransitionEnd(150) :
       complete()
 
-    this.$element.trigger('hidden.bs.' + this.type)
+    this.$element.trigger('showHidden.bs.' + this.type)
 
     return this
   }
