@@ -14,18 +14,22 @@ namespace ServerSideApp.Repositories
             var command = Prepare(Connect(),
                 $"SELECT SUM(Value) / COUNT(Value) FROM {_table} WHERE CommentId = @commentId",
                 new SqlParameter("@commentId", commentId));
-            return float.Parse(command.ExecuteScalar().ToString());
+            var result = command.ExecuteScalar().ToString();
+            if (string.IsNullOrEmpty(result)) return float.NaN;
+            return float.Parse(result);
         }
         public float GetRating(int commentId, string userId) {
             var command = Prepare(Connect(),
                 $"SELECT Value FROM {_table} WHERE CommentId = @commentId && UserId = @userId",
                 new SqlParameter("@commentId", commentId),
                 new SqlParameter("@userId", userId));
-            return float.Parse(command.ExecuteScalar().ToString());
+            var result = command.ExecuteScalar().ToString();
+            if (string.IsNullOrEmpty(result)) return float.NaN;
+            return float.Parse(result);
         }
         private bool IsSet(int commentId, string userId) {
             var command = Prepare(Connect(),
-                $"SELECT Upvote FROM {_table} WHERE UserId = @UserId AND CommentId = @commentId",
+                $"SELECT Value FROM {_table} WHERE UserId = @UserId AND CommentId = @commentId",
                 new SqlParameter("@commentId", commentId), new SqlParameter("@UserId", userId));
             var a = command.ExecuteScalar();
             return a != null;

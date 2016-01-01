@@ -9,7 +9,7 @@ namespace ServerSideApp.Repositories
 {
     public class CommentRepository : RepositoryBase
     {
-        public static readonly string TABLE = "Comments";
+        public static readonly string TABLE = "PianoComments";
 
         public static int Add(Comment comment) {
             var command = Prepare(Connect(),

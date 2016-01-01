@@ -76,14 +76,11 @@
     </dl>
 </div>
 <p>
-    @if (Model.CanEdit) {
-        @Html.ActionLink(Global.Edit, "Edit", new{id = Model.Id})
-        ;
-        @Html.Raw(" |")
-        ;
-    }
     @Html.ActionLink(Global.ReturnList, "List")
+    @if (Model.CanEdit) {
+        @Html.Raw(" |")
+        @Html.ActionLink(Global.Edit, "Edit", new { id = Model.Id })
+    }
 </p>
-
 
 @Html.Action("GetComments","Comment",new { postId = Model.Id, topic = Topics.PianoMusic})

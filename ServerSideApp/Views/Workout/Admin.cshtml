@@ -1,0 +1,16 @@
+﻿@using ServerSideApp.Resources
+
+
+<h2>Administrator page for Workouts</h2>
+
+@Html.ActionLink("Return to admin page", "Index", "Admin")
+
+<h4>Muscle groups</h4>
+@{ 
+    ViewBag.ModelType = "muscle";
+}
+@Html.Partial("NameIdListPartial",@ServerSideApp.Repositories.WorkoutMuscleRepository.GetAll())
+
+<br/>
+
+@Html.ActionLink(Global.ReturnList, "List")

@@ -1,0 +1,81 @@
+﻿@using ServerSideApp.Models.Workout
+@using ServerSideApp.Resources;
+@model ListPM
+
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>
+    @Global.List
+    @if (Model.IsSorted) {
+        @Html.Raw(" " + Model.MuscleSelects.First(m => m.Selected).Text)
+    }
+</h2>
+
+<p>
+    @if (Model.CanCreate) {
+        @Html.ActionLink(Global.New, "New")
+
+    }
+</p>
+@using (Html.BeginForm("List", "Workout", FormMethod.Get)) {
+    @Html.DropDownList("muscleArea", Model.MuscleSelects, Global.Musclegroup, null)
+    <input type="submit" id="s" name="s" value="Go!" />
+}
+<table class="table">
+    <tr>
+        <th>
+            <b>@Global.Description</b>
+        </th>
+        <th>
+            <b>@Global.Musclegroup</b>
+        </th>
+        <th>
+            <b>@Global.PostedBy</b>
+        </th>
+        <th>
+            <b>@Global.Reps</b>
+        </th>
+        <th>
+            <b>@Global.Rating</b>
+        </th>
+        <th></th>
+    </tr>
+
+
+    @foreach (var item in Model.WorkoutList) {
+        <tr>
+            <td>
+                @Html.ActionLink(item.Text, "Details", new {id = item.Id})
+            </td>
+            <td>
+                @Html.ActionLink(item.Muscle, "List", new { muscleArea = item.MuscleId})
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName) <br/>
+                <i>@Html.DisplayFor(modelItem => item.RelativeTimeString)</i>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Reps.Count)
+            </td>
+            <td>
+
+                <div style="width: @item.RatingPercent%; height: 20px; background-color: @item.RatingColor">
+                    @Html.Raw(item.IsRated ? "" : Global.NoRatings)
+                </div>
+            </td>
+            <td>
+                @if (item.CanEdit) {
+                    @Html.ActionLink(Global.Edit, "Edit", new {id = item.Id})
+                    @Html.Raw(" | ")
+                    @Html.ActionLink(Global.Delete, "Delete", new {id = item.Id})
+                }
+            </td>
+        </tr>
+    }
+
+</table>
+@if (Model.IsSorted) {
+    @Html.ActionLink(Global.FullList, "List")
+}

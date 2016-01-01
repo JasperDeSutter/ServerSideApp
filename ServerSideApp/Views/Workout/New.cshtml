@@ -1,0 +1,21 @@
+﻿@using ServerSideApp.Models.Workout
+@using ServerSideApp.Resources
+@model EditPM
+@{
+    ViewBag.Title = Global.Create;
+}
+
+<h2>@Global.Create</h2>
+
+<form action="" method="post" >
+    @Html.AntiForgeryToken()
+    @Html.Partial("EditPartial")
+</form>
+
+<div>
+    @Html.ActionLink(Global.ReturnList, "List")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

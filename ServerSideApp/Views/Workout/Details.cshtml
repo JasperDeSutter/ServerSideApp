@@ -1,0 +1,75 @@
+﻿@using ServerSideApp.Models.Workout
+@using ServerSideApp.Resources
+@model DetailsPM
+
+@{
+    ViewBag.Title = Global.Details;
+}
+
+<h2>@Global.Details</h2>
+
+<div>
+
+    <h4>@Model.Text</h4>
+
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Muscle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Muscle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+            <br />
+            <i>@Html.DisplayFor(model => model.RelativeTimeString)</i>
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Reps)
+        </dt>
+
+        <dd>
+            @foreach (var item in Model.Reps) {
+                @Html.Raw(item.Count + "x " + item.Description)
+                <br />
+            }
+        </dd>
+        @if (Model.IsRated) {
+            <dt>
+                @Html.DisplayNameFor(model => model.RatingPercent)
+            </dt>
+
+            <dd>
+                <div style="width: @Model.RatingPercent%; height: 20px; background-color: @Model.RatingColor"></div>
+            </dd>
+        }
+        @if (!Model.CanEdit) {
+            <dt>
+                <b>@Global.Rate</b>
+            </dt>
+
+            <dd>
+                @Html.ActionLink("Horrible", "Rate", new { id = Model.Id, vote = "0" })
+                @Html.ActionLink("Bad", "Rate", new { id = Model.Id, vote = "1" })
+                @Html.ActionLink("Good", "Rate", new { id = Model.Id, vote = "2" })
+                @Html.ActionLink("Outstanding","Rate",new {id=Model.Id, vote="3"})
+            </dd>
+        }
+    </dl>
+</div>
+<p>
+    @Html.ActionLink(Global.ReturnList, "List")
+    @if (Model.CanEdit) {
+        @Html.Raw(" |")
+        @Html.ActionLink(Global.Edit, "Edit", new { id = Model.Id })
+    }
+</p>

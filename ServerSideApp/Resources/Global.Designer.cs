@@ -88,6 +88,24 @@ namespace ServerSideApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Count.
+        /// </summary>
+        public static string Count {
+            get {
+                return ResourceManager.GetString("Count", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create.
+        /// </summary>
+        public static string Create {
+            get {
+                return ResourceManager.GetString("Create", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete.
         /// </summary>
         public static string Delete {
@@ -133,15 +151,6 @@ namespace ServerSideApp.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Duration.
-        /// </summary>
-        public static string Duration {
-            get {
-                return ResourceManager.GetString("Duration", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Edit.
         /// </summary>
         public static string Edit {
@@ -151,11 +160,29 @@ namespace ServerSideApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to See full list.
+        /// </summary>
+        public static string FullList {
+            get {
+                return ResourceManager.GetString("FullList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Genre.
         /// </summary>
         public static string Genre {
             get {
                 return ResourceManager.GetString("Genre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List.
+        /// </summary>
+        public static string List {
+            get {
+                return ResourceManager.GetString("List", resourceCulture);
             }
         }
         
@@ -174,6 +201,15 @@ namespace ServerSideApp.Resources {
         public static string New {
             get {
                 return ResourceManager.GetString("New", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not yet rated.
+        /// </summary>
+        public static string NoRatings {
+            get {
+                return ResourceManager.GetString("NoRatings", resourceCulture);
             }
         }
         
@@ -223,6 +259,24 @@ namespace ServerSideApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please Rate.
+        /// </summary>
+        public static string Rate {
+            get {
+                return ResourceManager.GetString("Rate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rating.
+        /// </summary>
+        public static string Rating {
+            get {
+                return ResourceManager.GetString("Rating", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please register to enter this part of the website..
         /// </summary>
         public static string RegisterToEnter {
@@ -237,6 +291,15 @@ namespace ServerSideApp.Resources {
         public static string Rep {
             get {
                 return ResourceManager.GetString("Rep", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reps.
+        /// </summary>
+        public static string Reps {
+            get {
+                return ResourceManager.GetString("Reps", resourceCulture);
             }
         }
         

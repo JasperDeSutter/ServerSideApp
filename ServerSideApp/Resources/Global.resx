@@ -126,6 +126,12 @@
   <data name="Composer" xml:space="preserve">
     <value>Composer</value>
   </data>
+  <data name="Count" xml:space="preserve">
+    <value>Count</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>Create</value>
+  </data>
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
   </data>
@@ -141,20 +147,26 @@
   <data name="Downloads" xml:space="preserve">
     <value>Downloads</value>
   </data>
-  <data name="Duration" xml:space="preserve">
-    <value>Duration</value>
-  </data>
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>
   </data>
+  <data name="FullList" xml:space="preserve">
+    <value>See full list</value>
+  </data>
   <data name="Genre" xml:space="preserve">
     <value>Genre</value>
+  </data>
+  <data name="List" xml:space="preserve">
+    <value>List</value>
   </data>
   <data name="Musclegroup" xml:space="preserve">
     <value>Muscle group</value>
   </data>
   <data name="New" xml:space="preserve">
     <value>Create</value>
+  </data>
+  <data name="NoRatings" xml:space="preserve">
+    <value>Not yet rated</value>
   </data>
   <data name="PianoCreate" xml:space="preserve">
     <value>Post a new piano piece</value>
@@ -171,11 +183,20 @@
   <data name="PostedBy" xml:space="preserve">
     <value>Posted by</value>
   </data>
+  <data name="Rate" xml:space="preserve">
+    <value>Please Rate</value>
+  </data>
+  <data name="Rating" xml:space="preserve">
+    <value>Rating</value>
+  </data>
   <data name="RegisterToEnter" xml:space="preserve">
     <value>Please register to enter this part of the website.</value>
   </data>
   <data name="Rep" xml:space="preserve">
     <value>Repetition</value>
+  </data>
+  <data name="Reps" xml:space="preserve">
+    <value>Reps</value>
   </data>
   <data name="ReturnList" xml:space="preserve">
     <value>&lt;&lt; Back to list</value>

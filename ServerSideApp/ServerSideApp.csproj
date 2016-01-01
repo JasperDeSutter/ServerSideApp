@@ -179,7 +179,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\LanguageHelper.cs" />
+    <Compile Include="Helpers\ListExtension.cs" />
     <Compile Include="Helpers\TimeHelper.cs" />
+    <Compile Include="Helpers\Roles.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Comment\Comment.cs" />
     <Compile Include="Models\Comment\CommentListPM.cs" />

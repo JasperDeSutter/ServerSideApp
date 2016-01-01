@@ -1,0 +1,61 @@
+﻿@using ServerSideApp.Models.Workout
+@using ServerSideApp.Resources
+@model EditPM
+
+
+
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.MuscleId, Global.Musclegroup, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.MuscleId, Model.Muscles, "-- " + Global.SelectOne + " --", new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.MuscleId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Text, Global.Description, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Text, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <h4>Repititions</h4>
+    <table class="form-group">
+        <tr>
+            <th>@Global.Rep</th>
+            <th>@Global.Count</th>
+            <th></th>
+        </tr>
+        @for (int i = 0; i < Model.Reps.Count; i++) {
+            var rep = Model.Reps[i];
+            <tr>
+                <td>@*@Html.EditorFor(model => rep.Description, new { htmlAttributes = new { name = "Reps[" + i + "].Description" } } )*@
+                    <input name="Reps[@i].Description" value="@rep.Description" class="text-box single-line valid"/>
+                       </td>
+                <td><input name="Reps[@i].Count" value="@rep.Count" class="text-box single-line valid" /></td>
+
+                <td></td>
+            </tr>
+        }
+        <tr>
+            <td>
+                @Html.EditorFor(model => model.NewRep.Description)
+            </td>
+            <td>
+                @Html.EditorFor(model => model.NewRep.Count)
+            </td>
+            <td>
+                <input name="submit" value="Add" type="Submit" class="btn btn-default" />
+            </td>
+        </tr>
+    </table>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input name="submit" type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+</div>

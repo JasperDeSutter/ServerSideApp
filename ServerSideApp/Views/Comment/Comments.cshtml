@@ -1,0 +1,54 @@
+﻿@using ServerSideApp.Helpers
+@model ServerSideApp.Models.Comment.CommentListPM
+
+@{
+    Layout = null;
+}
+<table class="table">
+    <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Comments) {
+        if (item.Hidden && !Model.CanHide) {
+            continue;
+        }
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Text)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RelativeTimeString)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Rating)
+            </td>
+            <td>
+                @if (Model.CanHide) {
+                    @Html.ActionLink(item.Hidden ? "Unhide" : "Hide", "Hide", "Comment", new { id = item.Id, hide = !item.Hidden }, null)
+
+                }
+            </td>
+        </tr>
+    }
+</table>
+@if (Model.CanCreate) {
+    using (Html.BeginForm("AddComment", "Comment")) {
+        <div class="form-horizontal">
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.PostId)
+            @Html.HiddenFor(m => m.Topic)
+            @Html.EditorFor(model => model.Text, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    }
+}
